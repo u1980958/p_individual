@@ -7,8 +7,6 @@ gController.init(updateSRC).forEach(function(card, indx){
     card.pointer = $('#c'+indx);
     card.pointer.on('click', () => gController.click(card));
     card.pointer.attr("src", card.current);
-    setInterval(card.goFront(), temps);
-    card.goBack();
 });
 
 function updateSRC(){
