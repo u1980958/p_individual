@@ -9,7 +9,7 @@ export var game = function(){
                 this.current = back;
                 this.clickable = true;
                 this.callback();
-            }, 1000);
+            }, temps);
         },
         goFront: function (){
             this.current = this.front;
@@ -21,9 +21,22 @@ export var game = function(){
     var lastCard;
     var pairs = 2;
     var points = 100;
+    var resta = 25;
+    var temps = 1000;
 
     return {
         init: function (call){
+            var op = localStorage.getItem("options");
+            op = JSON.parse(op);
+            console.log(op.pairs)
+            pairs= parseInt(op.pairs);
+            console.log(op.difficulty);
+            if(op.difficulty=="easy") resta=10;
+            else if (op.difficulty=="normal") temps=500;
+            else {
+                resta = 40;
+                temps = 500;
+            }
             var items = resources.slice(); // Copiem l'array
             items.sort(() => Math.random() - 0.5); // Aleatòria
             items = items.slice(0, pairs); // Agafem els primers
@@ -53,7 +66,7 @@ export var game = function(){
                 }
                 else{
                     [card, lastCard].forEach(c=>c.goBack());
-                    points-=25;
+                    points-=resta;
                     if (points <= 0){
                         alert ("Has perdut");
                         window.location.replace("../");

@@ -24,11 +24,12 @@ h1:after, h1:before {
     flex-wrap: wrap;
     flex-direction: row;
     margin:10px;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .card{
     margin-bottom: 10px;
+    margin-right: 10px;
     height: 200px;
     width: auto;
     flex-direction: row;
