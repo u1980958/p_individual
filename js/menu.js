@@ -1,7 +1,7 @@
-var play = $("#play");
-var options = $("#options");
-var saves = $("#saves");
-var exit = $("#exit");
+var play = $('#play');
+var options = $('#options');
+var saves = $('#saves');
+var exit = $('#exit');
 
 
 play.on('click', function(){window.location.assign("./html/game.html");});
