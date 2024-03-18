@@ -28,7 +28,7 @@ export var game = function(){
         init: function (call){
             var op = localStorage.getItem("options");
             op = JSON.parse(op);
-            console.log(op.pairs)
+            console.log(op.pairs);
             pairs= parseInt(op.pairs);
             console.log(op.difficulty);
             if(op.difficulty=="easy") resta=10;
