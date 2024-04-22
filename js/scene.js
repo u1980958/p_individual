@@ -5,6 +5,7 @@ export class PlayScene extends Phaser.Scene{
         super('PlayScene');
         this.resources = [];
         this.cards = gController.init(()=>null); // Inicialitzar cartes
+        console.log(this.cards);
     }
 
     preload() {  
