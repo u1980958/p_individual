@@ -45,7 +45,7 @@ export var game = function(){
         init: function (call){
             if (sessionStorage.save){ // Load game
                 let partida = JSON.parse(sessionStorage.save);
-                pairs = partida.pairs;
+                if(partida.pairs!=null)pairs = partida.pairs;
                 points = partida.points;
                 partida.cards.map(item=>{
                     let it = Object.create(card);
