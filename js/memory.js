@@ -26,24 +26,6 @@ export var game = function(){
 
     return {
         init: function (call){
-<<<<<<< HEAD
-            if (sessionStorage.save){ // Load game
-                let partida = JSON.parse(sessionStorage.save);
-                if(partida.pairs!=null)pairs = partida.pairs;
-                points = partida.points;
-                partida.cards.map(item=>{
-                    let it = Object.create(card);
-                    it.front = item.front;
-                    it.current = item.current;
-                    it.isDone = item.isDone;
-                    it.waiting = item.waiting;
-                    it.callback = call;
-                    cards.push(it);
-                    if (it.current != back && !it.waiting && !it.isDone) it.goBack();
-                    else if (it.waiting) lastCard = it;
-                });
-                return cards;
-=======
             var op = localStorage.getItem("options");
             op = JSON.parse(op);
             console.log(op.pairs);
@@ -54,7 +36,6 @@ export var game = function(){
             else {
                 resta = 40;
                 temps = 500;
->>>>>>> parent of cd5313d (Merge pull request #15 from u1980958/BRANCH_1)
             }
             var items = resources.slice(); // Copiem l'array
             items.sort(() => Math.random() - 0.5); // Aleatòria
