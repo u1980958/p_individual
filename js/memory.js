@@ -44,21 +44,32 @@ export var game = function(){
     return {
         init: function (call){
             if (sessionStorage.save){ // Load game
-                let partida = JSON.parse(sessionStorage.save);
-                pairs = partida.pairs;
-                points = partida.points;
-                partida.cards.map(item=>{
-                    let it = Object.create(card);
-                    it.front = item.front;
-                    it.current = item.current;
-                    it.isDone = item.isDone;
-                    it.waiting = item.waiting;
-                    it.callback = call;
-                    cards.push(it);
-                    if (it.current != back && !it.waiting && !it.isDone) it.goBack();
-                    else if (it.waiting) lastCard = it;
+                var op = localStorage.getItem("options");
+                op = JSON.parse(op);
+                console.log(op.pairs);
+                pairs= parseInt(op.pairs);
+                console.log(op.difficulty);
+                if(op.difficulty=="easy") resta=10;
+                else if (op.difficulty=="normal") temps=500;
+                else {
+                    resta = 40;
+                    temps = 500;
+                }
+                var items = resources.slice(); // Copiem l'array
+                items.sort(() => Math.random() - 0.5); // Aleatòria
+                items = items.slice(0, pairs); // Agafem els primers
+                items = items.concat(items);
+                items.sort(() => Math.random() - 0.5); // Aleatòria
+                var arr_c = [];
+                 items.map(item => {
+                    let carta = Object.create(card, {front: {value:item}, callback: {value:call}});
+                    carta.current= carta.front;
+                    carta.clickable=false;
+                    carta.goBack();
+                    arr_c.push(carta);
                 });
-                return cards;
+               
+                return arr_c;
             }
             else return mix().map(item => { // New game
                 cards.push(Object.create(card, { front: {value:item}, callback: {value:call}}));
