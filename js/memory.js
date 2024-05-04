@@ -32,25 +32,41 @@ export var game = function(){
     var temps=1000;
     var lastCard;
     var pairs = 2;
-    var points = 100;
-    var resta = 20;
+    var pairs_r=2;
+    var points = 0;
+    var vida = 6;
+    var resta = 1;
+    var suma=20;
+    var mode="n";
     var cards = []; // Llistat de cartes
 
     var mix = function(){
-        var op = localStorage.getItem("options");
+        var mod = localStorage.getItem("mode");
+        mod = JSON.parse(mod);
+        mode=mod.tipus;
+        if(mode=="normal"){
+             var op = localStorage.getItem("options");
                op = JSON.parse(op);
-               console.log(op.pairs);
-               pairs= parseInt(op.pairs);
-               console.log(op.difficulty);
-               if(op.difficulty=="easy") resta=10;
+               pairs_r= parseInt(op.pairs);   
+               if(op.difficulty=="easy") resta=1;
                else if (op.difficulty=="normal") temps=500;
                else {
-                   resta = 40;
+                   resta = 2;
                    temps = 500;
                }
+        }
+        else{
+            pairs=parseInt(localStorage.getItem("pairs"));
+            pairs_r= parseInt(localStorage.getItem("pairs"));
+            resta= parseInt(localStorage.getItem("resta"));
+            temps= parseInt(localStorage.getItem("temps"));
+            points= parseInt(localStorage.getItem("points"));
+            console.log(pairs);
+        }
+
         var items = resources.slice(); // Copiem l'array
         items.sort(() => Math.random() - 0.5); // Aleatòria
-        items = items.slice(0, pairs); // Agafem els primers
+        items = items.slice(0, pairs_r); // Agafem els primers
         items = items.concat(items);
         return items.sort(() => Math.random() - 0.5); // Aleatòria
     }
@@ -59,9 +75,7 @@ export var game = function(){
             if (sessionStorage.save){ // Load game
                 var op = localStorage.getItem("options");
                 op = JSON.parse(op);
-                console.log(op.pairs);
-                pairs= parseInt(op.pairs);
-                console.log(op.difficulty);
+                pairs_r= parseInt(op.pairs);
                 if(op.difficulty=="easy") resta=10;
                 else if (op.difficulty=="normal") temps=500;
                 else {
@@ -70,7 +84,7 @@ export var game = function(){
                 }
                 var items = resources.slice(); // Copiem l'array
                 items.sort(() => Math.random() - 0.5); // Aleatòria
-                items = items.slice(0, pairs); // Agafem els primers
+                items = items.slice(0, pairs_r); // Agafem els primers
                 items = items.concat(items);
                 items.sort(() => Math.random() - 0.5); // Aleatòria
                 var arr_c = [];
@@ -100,17 +114,32 @@ export var game = function(){
             card.goFront(lastCard);
             if (lastCard){ // Segona carta
                 if (card.check(lastCard)){
-                    pairs--;
-                    if (pairs <= 0){
-                        alert("Has guanyat amb " + points + " punts!");
-                        window.location.replace("../");
+                    pairs_r--;
+                    points=points+suma;
+                    if (pairs_r <= 0){
+                        if(mode=="infinit"){
+                            if(pairs<6) pairs=pairs+1;
+                            else if (resta<50)resta=resta+5;
+                            else if (temps!=0) temps=temps-20;
+                            localStorage.setItem("pairs",pairs);
+                            localStorage.setItem("resta",resta);
+                            localStorage.setItem("temps",temps);
+                            localStorage.setItem("points", points);
+                            window.location.reload();
+                        }
+                        else{
+                            console.log(mode);
+                            alert("Has guanyat amb " + points + " punts!");
+                            window.location.replace("../");
+                          
+                        }
                     }
                 }
                 else{
                     [card, lastCard].forEach(c=>c.goBack());
-                    points-=resta;
-                    if (points <= 0){
-                        alert ("Has perdut");
+                    vida-=resta;
+                    if (vida <= 0){
+                        alert ("Has perdut amb "+points+" punts");
                         window.location.replace("../");
                     }
                 }
@@ -121,7 +150,7 @@ export var game = function(){
         save: function (){
             var partida = {
                 uuid: localStorage.uuid,
-                pairs: pairs,
+                pairs: pairs_r,
                 points: points,
                 cards: []
             };

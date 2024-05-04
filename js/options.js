@@ -34,7 +34,3 @@ $('#apply').on('click',function(){
     options.applyChanges();
     location.assign("../");
 });
-
-$('#Normal').on('click', function(){
-    location.assign("canvasgame.html");
-});
