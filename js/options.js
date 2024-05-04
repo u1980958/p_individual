@@ -3,7 +3,7 @@ var options = function(){
         pairs:2,
         difficulty:'normal'
     };
-    
+
     var pairs = $('#pairs');
     var difficulty = $('#dif');
 
@@ -33,4 +33,8 @@ $('#default').on('click',function(){
 $('#apply').on('click',function(){
     options.applyChanges();
     location.assign("../");
+});
+
+$('#Normal').on('click', function(){
+    location.assign("canvasgame.html");
 });

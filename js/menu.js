@@ -2,7 +2,7 @@ addEventListener('load', function() {
     document.getElementById('play').addEventListener('click', 
     function(){
         sessionStorage.removeItem("save");
-        window.location.assign("./html/phasergame.html");
+        window.location.assign("./html/Mode.html");
     });
 
     document.getElementById('saves').addEventListener('click', 
