@@ -1,8 +1,14 @@
+body{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+
 h1{
     text-align: center;
     font-size:60px; font-weight:300; color:#222; letter-spacing:1px;
     text-transform: uppercase;
-
     display: grid;
     grid-template-columns: 1fr max-content 1fr;
     grid-template-rows: 27px 0;
@@ -19,15 +25,8 @@ h1:after, h1:before {
   background-color:#f8f8f8;
 }
 
-#game{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    margin:10px;
-    justify-content: center;
-}
 
-.card{
+#card{
     margin-bottom: 10px;
     margin-right: 10px;
     height: 200px;
@@ -37,6 +36,15 @@ h1:after, h1:before {
     transition-duration: 500ms;
 }
 
-.card:hover{
+#card:hover{
 	box-shadow: 4px 10px 4px 0 rgba(0, 0, 0, 0.345);
+}
+
+canvas {
+    display: flex;
+    align-self: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }

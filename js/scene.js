@@ -18,16 +18,28 @@ export class PlayScene extends Phaser.Scene{
     }
 
     create() {
-        this.cameras.main.setBackgroundColor(0xBFFCFF);
+    this.cameras.main.setBackgroundColor(0xBFFCFF);
 
-        this.g_cards = this.physics.add.staticGroup();
-        this.cards.forEach((c, i)=> this.g_cards.create(250 + 100*i, 300, c.current));
+    this.g_cards = this.physics.add.staticGroup();
+    this.cards.forEach((c, i) => {
+        var x =150 + 100 * i;
 
-        this.g_cards.children.iterate((c, i) => {
-            c.setInteractive();
-            c.on('pointerup', ()=> gController.click(this.cards[i]));
-        });
-    }
+        var y = 300;
+        console.log(x);
+        if(x>=680){
+            y=450;
+            x=150+100*(i)-600;
+        } 
+        
+        this.g_cards.create(x, y, c.current);
+    });
+
+    this.g_cards.children.iterate((c, i) => {
+        c.setInteractive();
+        c.on('pointerup', () => gController.click(this.cards[i]));
+    });
+}
+
 
     update() {
         this.g_cards.children.iterate((c, i) => c.setTexture(this.cards[i].current));
